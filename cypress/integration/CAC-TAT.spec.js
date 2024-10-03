@@ -171,5 +171,24 @@ describe("Central de Atendimento ao Cliente TAT", function () {
       .should("be.visible");
   });
 
+  //Exercicios campos de selecao suspensa
+  it("Seleciona um produto (YouTube) por seu texto", () => {
+    cy.get("#product")
+      .select("YouTube")
+      .should("have.value", "youtube");
+  });
 
+  it("Seleciona um produto (Mentoria) por seu valor", () => {
+    cy.get("#product")
+      .select("mentoria")
+      .should("have.value", "mentoria");
+  });
+
+  it("Seleciona um produto (Blog) por seu indice", () => {
+    cy.get("#product")
+      .select(1)
+      .should("have.value", "blog");
+  });
+
+  //Exercicios campos radio
 });
