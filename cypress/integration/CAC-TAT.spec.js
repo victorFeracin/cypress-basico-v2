@@ -107,7 +107,7 @@ describe("Central de Atendimento ao Cliente TAT", function () {
 
     cy.get("#phone-checkbox")
       .should("be.visible")
-      .click()
+      .check()
       .should("be.checked"); 
 
     cy.get("#open-text-area")
@@ -191,4 +191,43 @@ describe("Central de Atendimento ao Cliente TAT", function () {
   });
 
   //Exercicios campos radio
+  it("Marca o tipo de atendimento \"Feedback\"", () => {
+    cy.get("[type=\"radio\"]")
+      .check("feedback")
+      .should("be.checked", "feedback");
+  });
+
+  it("Marca cada tipo de atendimento", () => {
+    cy.get("[type=\"radio\"]")
+      .should("have.length", 3)
+      .each(($radio) => {
+        cy.wrap($radio).check();
+        cy.wrap($radio).should("be.checked");
+      });
+
+    //Versão simplificada de:
+    /*
+    cy.get("[type=\"radio\"]")
+      .check("ajuda")
+      .should("be.checked", "ajuda");
+
+    cy.get("[type=\"radio\"]")
+      .check("elogio")
+      .should("be.checked", "elogio");
+    
+    cy.get("[type=\"radio\"]")
+      .check("feedback")
+      .should("be.checked", "feedback");
+    */
+  });
+
+  //Exercicios checkbox
+  it("Marca ambos checkboxes, depois desmarca o ultimo", () => {
+    cy.get("input[type=\"checkbox\"]")
+      .check()
+      .should("be.checked")
+      .last()
+      .uncheck()
+      .should("not.be.checked")
+  });
 });
