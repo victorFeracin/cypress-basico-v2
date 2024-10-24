@@ -263,4 +263,18 @@ describe("Central de Atendimento ao Cliente TAT", function () {
         expect($input[0].files[0].name).to.equal("example.txt");
       });
   });
+
+  //Exercicios target blank
+  it("Verifica que a politica de privacidade abre em outra aba sem a necessidade de um clique", () => {
+    cy.get("#privacy a")
+      .should("be.visible")
+      .should("have.attr", "target", "_blank");
+  });
+
+  it("Acessa a pagina da politica de privacidade removendo o target e entao clicando no link", () => {
+    cy.get("#privacy a")
+      .should("be.visible")
+      .invoke("removeAttr", "target")
+      .click()
+  });
 });
