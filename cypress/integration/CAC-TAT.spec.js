@@ -221,13 +221,46 @@ describe("Central de Atendimento ao Cliente TAT", function () {
     */
   });
 
-  //Exercicios checkbox
+  //Exercicio checkbox
   it("Marca ambos checkboxes, depois desmarca o ultimo", () => {
     cy.get("input[type=\"checkbox\"]")
       .check()
       .should("be.checked")
       .last()
       .uncheck()
-      .should("not.be.checked")
+      .should("not.be.checked");
+  });
+
+  //Exercicios de upload de arquivos
+  it("Seleciona um arquivo da pasta fixtures", () => {
+    cy.get("#file-upload")
+      .should("not.have.value")
+      .selectFile("./cypress/fixtures/example.txt")
+      .should(($input) => {
+        expect($input[0].files[0].name).to.equal("example.txt");
+      });
+  });
+
+  it("Seleciona um arquivo simulando um drag-and-drop", () => {
+    cy.get("#file-upload")
+      .should("not.have.value")
+      .selectFile({
+        contents: "./cypress/fixtures/example.txt",
+        action: "drag-drop"
+      })
+      .should(($input) => {
+        expect($input[0].files[0].name).to.equal("example.txt");
+      });
+  });
+
+  it("Seleciona um arquivo utilizando uma fixture para a qual foi dada um alias", () =>{
+    cy.fixture("example.txt").as("exampleFile");
+
+    cy.get("#file-upload")
+      .should("not.have.value")
+      .selectFile("@exampleFile")
+      .should(($input) => {
+        expect($input[0].files[0].name).to.equal("example.txt");
+      });
   });
 });
